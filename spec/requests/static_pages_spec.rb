@@ -2,64 +2,34 @@ require 'spec_helper'
 
 describe "Static pages" do
 
+  subject { page }
+
   describe "Home page" do
+    before { visit root_path }
 
-    it "should have the content 'Main_App'" do
-      visit '/static_pages/home'
-      page.should have_content('Main_App')
-    end
-
-    it "should have the base title" do
-      visit '/static_pages/home'
-      page.should have_selector('title',
-                        :text => "Main_App")
-    end
-
-    it "should not have a custom page title" do
-      visit '/static_pages/home'
-      page.should_not have_selector('title', :text => '| Home')
-    end
+    it { should have_selector('h1',    text: 'Main_App') }
+    it { should have_selector('title', text: full_title('')) }
+    it { should_not have_selector 'title', text: '| Home' }
   end
 
   describe "Help page" do
+    before { visit help_path }
 
-    it "should have the content 'FAQ'" do
-      visit '/static_pages/help'
-      page.should have_content('FAQ')
-    end
-
-    it "should have the title 'FAQ'" do
-      visit '/static_pages/help'
-      page.should have_selector('title',
-                        :text => "Main_App | FAQ")
-    end
+    it { should have_selector('h1',    text: 'FAQ') }
+    it { should have_selector('title', text: full_title('FAQ')) }
   end
 
   describe "About page" do
+    before { visit about_path }
 
-    it "should have the h1 'About Us'" do
-      visit '/static_pages/about'
-      page.should have_selector('h1', :text => 'About Us')
-    end
-
-    it "should have the title 'About Us'" do
-      visit '/static_pages/about'
-      page.should have_selector('title',
-                    :text => "Main_App | About Us")
-    end
+    it { should have_selector('h1',    text: 'About Us') }
+    it { should have_selector('title', text: full_title('About Us')) }
   end
 
   describe "Contact page" do
+    before { visit contact_path }
 
-    it "should have the h1 'Contact Us'" do
-      visit '/static_pages/contact'
-      page.should have_selector('h1', :text => 'Contact Us')
-    end
-
-    it "should have the title 'Contact Us'" do
-      visit '/static_pages/contact'
-      page.should have_selector('title',
-                    :text => "Main_App | Contact Us")
-    end
+    it { should have_selector('h1',    text: 'Contact Us') }
+    it { should have_selector('title', text: full_title('Contact Us')) }
   end
 end
