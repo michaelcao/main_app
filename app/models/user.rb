@@ -19,10 +19,14 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :address, :birth_date, :description, :email, :languages, :name, :school, :work, :password, :password_confirmation
+  attr_accessible :address, :birth_date, :description, :email, :languages, :name, :school, :work, :password, :password_confirmation, :avatar
   has_secure_password
+  has_attached_file :avatar,
+                    :styles => { :medium => "300x300>", :thumb => "100x100>" },
+                    :default_url => '/images/:attachment/default_:style.jpg'
 
-  before_save { |user| user.email = email.downcase }
+  #before_save { |user| user.email = email.downcase }
+  before_save { self.email = email.downcase }
 
   validates :name, presence: true, length: { maximum: 64 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -32,4 +36,8 @@ class User < ActiveRecord::Base
 
   validates :password, presence: true, length: { minimum: 7 }
   validates :password_confirmation, presence: true
+
+  #validates_attachment_presence :avatar
+  validates_attachment_size :avatar, :less_than => 5.megabytes
+  validates_attachment_content_type :avatar, :content_type => ['image/jpeg', 'image/png']
 end

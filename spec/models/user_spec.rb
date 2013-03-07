@@ -44,6 +44,10 @@ describe User do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:avatar_file_name) }
+  it { should respond_to(:avatar_file_size) }
+  it { should respond_to(:avatar_content_type) }
+  it { should respond_to(:avatar_updated_at) }
 
   it { should be_valid }
 
@@ -100,6 +104,16 @@ describe User do
         @user.email = valid_address
         @user.should be_valid
       end      
+    end
+  end
+
+  describe "email address with mixed case" do
+    let(:mixed_case_email) { "Foo@ExAMPle.CoM" }
+
+    it "should be saved as all lower-case" do
+      @user.email = mixed_case_email
+      @user.save
+      @user.reload.email.should == mixed_case_email.downcase
     end
   end
 
