@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   attr_accessible :address, :birth_date, :description, :email, :languages, :name, :school, :work, :password, :password_confirmation, :avatar
   has_secure_password
   has_attached_file :avatar,
-                    :styles => { :medium => "300x300>", :thumb => "100x100>" },
+                    :styles => { :medium => "300x300>", :thumb => "150x150>" },
                     :default_url => '/images/:attachment/default_:style.jpg'
 
   before_save { self.email = email.downcase }
