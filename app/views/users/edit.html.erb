@@ -1,0 +1,33 @@
+<% provide(:title, "Edit user") %> 
+<h1>Update your profile</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages' %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+
+      <%= f.label :password_confirmation, "Confirm Password" %>
+      <%= f.password_field :password_confirmation %>
+
+      <div id="avatar_div">
+        <%= image_tag(@user.avatar.url(:thumb), alt: @user.name, :id=>"preview-photo", size: "150x150") %>
+        <span class="file-wrapper">
+          <%= f.file_field :avatar, onchange: "preview(this);" %>
+          <span class="button">Change photo?</span>
+        </span>
+      </div>
+
+      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+
+  </div>
+</div>
