@@ -34,4 +34,8 @@ module SessionsHelper
   def store_location
     session[:return_to] = request.url
   end
+
+  def check_signed_in
+      redirect_to(root_path) if signed_in?
+    end
 end
